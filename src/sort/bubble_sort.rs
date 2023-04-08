@@ -2,17 +2,17 @@
 // Space complexty O(1)
 
 pub fn bubble_sort<T: PartialOrd>(input: &mut Vec<T>) {
-    let mut swapped_something = true;
-    loop {
-        if !swapped_something {
-            break; // Input is sequential if nothing has been changed
-        }
+    let mut swapped_something: bool;
+    for i in 0..input.len() {
         swapped_something = false;
-        for i in 0..input.len() - 1 {
-            if input[i] > input[i + 1] {
-                input.swap(i, i + 1);
+        for j in 0..input.len() - 1 - i {
+            if input[j] > input[j + 1] {
                 swapped_something = true;
+                input.swap(j, j + 1);
             }
+        }
+        if !swapped_something {
+            break;
         }
     }
 }
