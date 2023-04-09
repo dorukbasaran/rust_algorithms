@@ -1,13 +1,28 @@
 // time complexity is O(sqrt(n))
 pub fn sqrt_root<T: PartialEq + PartialOrd>(input: &Vec<T>, desired_value: T) -> Option<usize> {
     let jump_amount = (input.len() as f64).sqrt() as usize;
-    let i = 0;
-    for i in (0..input.len()).step_by(jump_amount) {
-        if input[i] == desired_value {
+    if jump_amount == 0 {
+        return None;
+    }
+    let mut i = 0;
+    while i < input.len() {
+        if input[i] >= desired_value {
             break;
         }
+        let new_i = i + jump_amount;
+        if new_i >= input.len() {
+            i = input.len() - 1;
+            break;
+        }
+        i = new_i;
     }
-    let j = i - jump_amount;
+    let j: usize;
+    if jump_amount > i {
+        j = 0;
+    } else {
+        j = i - jump_amount;
+    }
+
     for j in j..=i {
         if input[j] == desired_value {
             return Some(j);
